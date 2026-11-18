@@ -8,6 +8,7 @@ from json_practice import (
 )
 from decimal import Decimal
 import json
+import pytest
 
 
 def make_order(client_name="Иван", price: Decimal | int | str = 500):
@@ -21,8 +22,7 @@ def make_urgent_order(
     client_name="Иван",
     phone="+7 000 000-00-00",
     quantity=1,
-    surcharge: Decimal | int | str
-     = 100
+    surcharge: Decimal | int | str = 100
 ):
     client = Client(client_name, phone)
     item = OrderItem("Услуга", quantity, 500)
@@ -152,18 +152,13 @@ def test_completed_status_is_saved_to_json(tmp_path, monkeypatch):
     assert saved_data[0]["status"] == "Завершён"
 
 
-def test_order_from_data_restores_completed_status():
+# Параметризация двух прошлых тестов
+@pytest.mark.parametrize("status", ["Завершён", "Отменён"])
+def test_order_from_data_restores_status(status):
     order_data = order_to_data(make_order("Иван"))
-    order_data["status"] = "Завершён"
+    order_data["status"] = status
     restored_order = order_from_data(order_data)
-    assert restored_order.status == "Завершён"
-
-
-def test_order_from_data_restores_canceled_status():
-    order_data = order_to_data(make_order("Иван"))
-    order_data["status"] = "Отменён"
-    restored_order = order_from_data(order_data)
-    assert restored_order.status == "Отменён"
+    assert restored_order.status == status
 
 
 def test_save_orders_preserves_multiple_orders(tmp_path, monkeypatch):
