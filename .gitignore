@@ -1,0 +1,4 @@
+
+.venv/
+orders.json
+__pycache__/
