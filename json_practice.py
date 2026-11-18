@@ -56,7 +56,8 @@ def order_from_data(data):
         order.complete()
     elif data["status"] == "Отменён":
         order.cancel()
-
+    else:
+        raise ValueError("Неизвестный статус")
     return order
 
 
@@ -227,4 +228,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-        

@@ -209,3 +209,16 @@ def test_order_from_data_restores_client_data():
 def test_order_from_data_restores_item_price():
     restored = order_from_data(order_to_data(make_order(price="500.50")))
     assert restored.items[0].unit_price == Decimal("500.50")
+
+
+def test_order_from_data_raises_error_for_unknown_status():
+    data = {
+        "client": {"name": "Иван", "phone": "+7 000 000-00-00"},
+        "items": [{"name": "Услуга", "quantity": 2, "unit_price": "500.00"}],
+        "status": "Неизвестный",
+        "type": "urgent",
+        "surcharge": "150.50",
+    }
+
+    with pytest.raises(ValueError):
+        order = order_from_data(data)
