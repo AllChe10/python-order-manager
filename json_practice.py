@@ -56,7 +56,7 @@ def order_from_data(data):
         order.complete()
     elif data["status"] == "Отменён":
         order.cancel()
-    else:
+    elif data["status"] != "Новый":
         raise ValueError("Неизвестный статус")
     return order
 
@@ -144,6 +144,8 @@ def select_order(orders):
         return None
 
     return orders[order_number - 1]
+
+
 def find_orders_by_client(orders, client_name):
     matches = []
 
@@ -152,6 +154,7 @@ def find_orders_by_client(orders, client_name):
             matches.append(order)
 
     return matches
+
 
 def main():
     try:
@@ -225,6 +228,7 @@ def main():
             break
         else:
             print("Нет такого пункта")
+
 
 if __name__ == "__main__":
     main()

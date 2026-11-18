@@ -185,6 +185,7 @@ def test_order_from_data_restores_standard_order():
     data = order_to_data(order)
     restored = order_from_data(data)
     assert type(restored) is Order
+    assert restored.status == "Новый"
 
 
 def test_order_from_data_restores_multiple_items():
