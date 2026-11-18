@@ -223,3 +223,17 @@ def test_order_from_data_raises_error_for_unknown_status():
 
     with pytest.raises(ValueError):
         order = order_from_data(data)
+
+
+def test_order_from_data_raises_error_for_unknown_type():
+    data = {
+        "client": {"name": "Иван", "phone": "+7 000 000-00-00"},
+        "items": [{"name": "Услуга", "quantity": 2, "unit_price": "500.00"}],
+        "status": "Новый",
+        "type": "Неизвестный",
+        "surcharge": "150.50",
+    }
+    with pytest.raises(ValueError):
+        order = order_from_data(data)
+
+

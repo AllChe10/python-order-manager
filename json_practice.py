@@ -46,9 +46,10 @@ def order_from_data(data):
 
     if data["type"] == "urgent":
         order = UrgentOrder(client, items, data["surcharge"])
-    else:
+    elif data["type"] == "standard":
         order = Order(client, items)
-
+    else:
+        raise ValueError("Неизвестный тип заказа")
     if data["status"] == "В работе":
         order.start_work()
     elif data["status"] == "Завершён":
