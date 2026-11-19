@@ -46,8 +46,11 @@ py -m venv .venv
 ## Структура
 
 ```text
+.github/workflows/tests.yml
+.gitignore
 Order.py
 json_practice.py
+requirements.txt
 test_order.py
 test_json_practice.py
 ```
